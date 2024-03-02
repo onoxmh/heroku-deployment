@@ -44,7 +44,7 @@ const deploy = () => {
         .toString()
         .trim();
 
-    if (remote_branch !== "main") {
+    if (remote_branch.indexOf("main") > 0) {
         console.error(`Branch '${remote_branch}' is invalid.`);
         core.setFailed("Your remote branch mush be main");
     } else {
