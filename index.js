@@ -39,9 +39,12 @@ const addEnvConfigVars = (app_name) => {
 
 const deploy = () => {
     execSync(`git init`, {maxBuffer: 104857600});
-    execSync(`git branch -M main`, {maxBuffer: 104857600});
-
     addRemote(heroku.app_name);
+
+    execSync(`git branch -M main`, {maxBuffer: 104857600});
+    execSync(`git add .`, {maxBuffer: 104857600});
+    execSync(`git commit --allow-empty -am "Empty-Commit"`, {maxBuffer: 104857600});
+
     addEnvConfigVars(heroku.app_name);
 
     execSync(`git push heroku main:main`, {maxBuffer: 104857600});
