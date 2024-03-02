@@ -56,6 +56,7 @@ const deploy = () => {
     // Program logic
     try {
         console.log("process.env", process.env);
+
         execSync(`git config user.name "Heroku-Deploy"`);
         execSync(`git config user.email "${heroku.email}"`);
 
