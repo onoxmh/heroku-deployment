@@ -50,8 +50,13 @@ const deploy = () => {
         console.log("Initializing Heroku repository")
         execSync(`git init`);
         console.log(`Success : git init`);
+
+        addRemote(heroku.app_name);
+
         execSync(`git branch -M main`);
         console.log(`Success : git branch -M main`);
+        execSync('git fetch --unshallow heroku');
+        console.log(`Success : git fetch --unshallow heroku`);
     } else if (!remote_branch.includes("main")) {
         console.error(`Branch '${remote_branch}' is invalid.`);
         core.setFailed("Your remote branch mush be main");
@@ -67,8 +72,7 @@ const deploy = () => {
     try {
         execSync(`git push -u heroku HEAD:refs/heads/main`);
         console.log(`Success : git push heroku main`);
-    }
-    catch (err) {
+    } catch (err) {
         console.error('Error : git push heroku main : ', err);
     }
 };
