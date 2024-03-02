@@ -50,8 +50,6 @@ const deploy = () => {
         console.log("Initializing Heroku repository")
         execSync(`git init`);
         execSync(`git branch -M main`);
-        execSync(`git add .`);
-        execSync(`git commit --allow-empty -am "Empty-Commit"`);
         execSync("git push -u heroku main")
     } else if (!remote_branch.includes("main")) {
         console.error(`Branch '${remote_branch}' is invalid.`);
