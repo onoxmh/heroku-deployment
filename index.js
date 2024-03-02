@@ -60,12 +60,12 @@ const deploy = () => {
     addEnvConfigVars(heroku.app_name);
 
     if (repoExists) {
-        execSync(`git pull heroku HEAD:refs/heads/main`, {maxBuffer: 104857600});
+        execSync(`git pull heroku HEAD:refs/heads/main`);
         console.log(`Success : git pull heroku main`);
     }
 
     try {
-        execSync(`git push -u heroku HEAD:refs/heads/main`, {maxBuffer: 104857600});
+        execSync(`git push -u heroku HEAD:refs/heads/main`);
         console.log(`Success : git push heroku main`);
     }
     catch (err) {
