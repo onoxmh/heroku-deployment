@@ -65,7 +65,7 @@ const deploy = () => {
     }
 
     try {
-        execSync(`git push heroku HEAD:refs/heads/main`, {maxBuffer: 104857600});
+        execSync(`git push -u heroku HEAD:refs/heads/main`, {maxBuffer: 104857600});
         console.log(`Success : git push heroku main`);
     }
     catch (err) {
