@@ -55,8 +55,8 @@ const deploy = () => {
 
         execSync(`git branch -M main`);
         console.log(`Success : git branch -M main`);
-        execSync('git fetch --unshallow heroku');
-        console.log(`Success : git fetch --unshallow heroku`);
+        execSync('git fetch --all --unshallow');
+        console.log(`Success : git fetch --all --unshallow`);
     } else if (!remote_branch.includes("main")) {
         console.error(`Branch '${remote_branch}' is invalid.`);
         core.setFailed("Your remote branch mush be main");
