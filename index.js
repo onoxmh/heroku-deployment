@@ -33,8 +33,6 @@ const addEnvConfigVars = (app_name) => {
 
     if (herokuVars && herokuVars.length > 0) {
         const configVarsStr = herokuVars.join(' ').replaceAll(',', '=');
-        console.log('configVarsStr', configVarsStr);
-
         execSync(`heroku config:set --app=${app_name} ${configVarsStr}`);
     }
 };
