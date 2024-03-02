@@ -20,7 +20,7 @@ EOF`;
 
 const addRemote = (app_name) => {
     execSync("heroku git:remote --app " + app_name);
-    console.log(`Success : heroku git:remote --app <name>`);
+    console.log(`Success : heroku git:remote --app ${app_name}`);
 };
 
 const addEnvConfigVars = (app_name) => {
@@ -44,7 +44,7 @@ const deploy = () => {
         .toString()
         .trim();
 
-    if (remote_branch.indexOf("main") > 0) {
+    if (remote_branch.includes("main")) {
         console.error(`Branch '${remote_branch}' is invalid.`);
         core.setFailed("Your remote branch mush be main");
     } else {
