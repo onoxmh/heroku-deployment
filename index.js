@@ -52,10 +52,6 @@ const deploy = () => {
         console.log(`Success : git init`);
         execSync(`git branch -M main`);
         console.log(`Success : git branch -M main`);
-        execSync(`git commit --allow-empty -m "Empty-Commit"`);
-        console.log(`Success : git commit --allow-empty -m "Empty-Commit"`);
-        execSync("git push -u heroku HEAD:main")
-        console.log(`Success : git push -u heroku HEAD:main`);
     } else if (!remote_branch.includes("main")) {
         console.error(`Branch '${remote_branch}' is invalid.`);
         core.setFailed("Your remote branch mush be main");
@@ -64,12 +60,12 @@ const deploy = () => {
     addEnvConfigVars(heroku.app_name);
 
     if (repoExists) {
-        execSync(`git pull heroku main`, {maxBuffer: 104857600});
+        execSync(`git pull heroku HEAD:refs/heads/main`, {maxBuffer: 104857600});
         console.log(`Success : git pull heroku main`);
     }
 
     try {
-        execSync(`git push heroku main`, {maxBuffer: 104857600});
+        execSync(`git push heroku HEAD:refs/heads/main`, {maxBuffer: 104857600});
         console.log(`Success : git push heroku main`);
     }
     catch (err) {
