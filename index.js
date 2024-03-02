@@ -41,7 +41,7 @@ const deploy = () => {
     addRemote(heroku.app_name);
     addEnvConfigVars(heroku.app_name);
 
-    execSync(`git push -u heroku HEAD:main`, {maxBuffer: 104857600});
+    execSync(`git push heroku main`, {maxBuffer: 104857600});
     console.log(`Success : git push heroku HEAD:main`);
 };
 
