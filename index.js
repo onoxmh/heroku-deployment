@@ -38,17 +38,41 @@ const addEnvConfigVars = (app_name) => {
 };
 
 const deploy = () => {
-    execSync(`git init`, {maxBuffer: 104857600});
     addRemote(heroku.app_name);
 
-    execSync(`git branch -M main`, {maxBuffer: 104857600});
-    execSync(`git add .`, {maxBuffer: 104857600});
-    execSync(`git commit --allow-empty -am "Empty-Commit"`, {maxBuffer: 104857600});
+    let remote_branch = execSync("git remote show heroku | grep 'HEAD'")
+        .toString()
+        .trim();
+
+    const repoExists = !remote_branch.includes("unknown");
+
+    if (!repoExists) {
+        console.log("Initializing Heroku repository")
+        execSync(`git init`);
+        console.log(`Success : git init`);
+        execSync(`git branch -M main`);
+        console.log(`Success : git branch -M main`);
+        execSync("git push -u heroku main")
+        console.log(`Success : git push -u heroku main`);
+    } else if (!remote_branch.includes("main")) {
+        console.error(`Branch '${remote_branch}' is invalid.`);
+        core.setFailed("Your remote branch mush be main");
+    }
 
     addEnvConfigVars(heroku.app_name);
 
-    execSync(`git push -u heroku main`, {maxBuffer: 104857600});
-    console.log(`Success : git push -u heroku main`);
+    if (repoExists) {
+        execSync(`git pull heroku main`, {maxBuffer: 104857600});
+        console.log(`Success : git pull heroku main`);
+    }
+
+    try {
+        execSync(`git push heroku main`, {maxBuffer: 104857600});
+        console.log(`Success : git push heroku main`);
+    }
+    catch (err) {
+        console.error('Error : git push heroku main : ', err);
+    }
 };
 
 (async () => {
