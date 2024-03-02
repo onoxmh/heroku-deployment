@@ -42,7 +42,7 @@ const deploy = () => {
     addEnvConfigVars(heroku.app_name);
 
     execSync(`git push`, {maxBuffer: 104857600});
-    console.log(`Success : git push`);
+    console.log(`Success : git push heroku`);
 };
 
 (async () => {
