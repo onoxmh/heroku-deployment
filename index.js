@@ -27,12 +27,12 @@ const addEnvConfigVars = (app_name) => {
     const herokuVars = Object.entries(process.env).map(entry => {
         if (entry[0].startsWith('HV_')) {
             entry[0] = entry[0].replace('HV_', '');
-            return entry;
+            return entry.join('=');
         }
     });
 
     if (herokuVars && herokuVars.length > 0) {
-        const configVarsStr = herokuVars.join(' ').replaceAll(',', '=');
+        const configVarsStr = herokuVars.join(' ');
         execSync(`heroku config:set --app=${app_name} ${configVarsStr}`);
     }
 };
