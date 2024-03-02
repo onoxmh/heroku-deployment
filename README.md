@@ -43,7 +43,8 @@ To create the environment variables :
 - Create a new environment that'll contain you environment variables.
 - Add your environment variables as `Environment secrets`
   - The <span style="color:crimson;">name</span> of the environment secrets <span style="color:crimson;">must begin</span> with <span style="color:orange;">HV_</span>
-- Define the job property `environment` with the created repository environment name
+- Define job property `environment` with the created repository environment name
+- Define `env` such as the example bellow
 
 > Job using GitHub environment example :
 .../.github/workflows/<workflow-name>.yml
@@ -57,6 +58,8 @@ jobs:
              uses: actions/checkout@v4
            - name: Heroku deploy
              uses: onoxmh/heroku-deployment@main
+             env:
+               HV_VAR: ${{secrets.HV_VAR}}
              with:
                  heroku_api_key: ${{secrets.HEROKU_API_KEY}}
                  heroku_app_name: <your-app-name>

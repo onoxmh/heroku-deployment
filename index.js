@@ -44,7 +44,7 @@ const deploy = () => {
         .toString()
         .trim();
 
-    if (remote_branch.includes("main")) {
+    if (!remote_branch.includes("main")) {
         console.error(`Branch '${remote_branch}' is invalid.`);
         core.setFailed("Your remote branch mush be main");
     } else {
@@ -55,8 +55,6 @@ const deploy = () => {
 (async () => {
     // Program logic
     try {
-        console.log("process.env", process.env);
-
         execSync(`git config user.name "Heroku-Deploy"`);
         execSync(`git config user.email "${heroku.email}"`);
 
