@@ -48,6 +48,8 @@ const deploy = () => {
         console.error(`Branch '${remote_branch}' is invalid.`);
         core.setFailed("Your remote branch mush be main");
     } else {
+        execSync(`git fetch heroku main`, {maxBuffer: 104857600});
+        execSync(`git pull heroku main`, {maxBuffer: 104857600});
         execSync(`git push heroku main`, {maxBuffer: 104857600});
     }
 };
