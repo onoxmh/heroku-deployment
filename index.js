@@ -47,16 +47,16 @@ const deploy = () => {
     const repoExists = !remote_branch.includes("unknown");
 
     if (!repoExists) {
-        console.log("Initializing Heroku repository")
-        execSync(`git init`);
-        console.log(`Success : git init`);
-
-        addRemote(heroku.app_name);
-
-        execSync(`git branch -M main`);
-        console.log(`Success : git branch -M main`);
-        execSync('git fetch --all --unshallow');
-        console.log(`Success : git fetch --all --unshallow`);
+        // console.log("Initializing Heroku repository")
+        // execSync(`git init`);
+        // console.log(`Success : git init`);
+        //
+        // addRemote(heroku.app_name);
+        //
+        // execSync(`git branch -M main`);
+        // console.log(`Success : git branch -M main`);
+        // execSync('git fetch --all --unshallow');
+        // console.log(`Success : git fetch --all --unshallow`);
     } else if (!remote_branch.includes("main")) {
         console.error(`Branch '${remote_branch}' is invalid.`);
         core.setFailed("Your remote branch mush be main");
@@ -64,10 +64,8 @@ const deploy = () => {
 
     addEnvConfigVars(heroku.app_name);
 
-    if (repoExists) {
-        execSync(`git pull heroku main`);
-        console.log(`Success : git pull heroku main`);
-    }
+    execSync(`git pull heroku main`);
+    console.log(`Success : git pull heroku main`);
 
     try {
         execSync(`git push heroku main`);
