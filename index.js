@@ -99,7 +99,7 @@ const deploy = () => {
         );
     } catch (err) {
         delete err.stack;
-        console.error('An error occured : ', err);
+        console.error('An error occured : ', err.message);
         core.setFailed("Impossible to deploy to Heroku.");
     }
 })();
