@@ -38,13 +38,19 @@ const addEnvConfigVars = (app_name) => {
 };
 
 const deploy = () => {
+    if (execSync("git status").includes('not a git repository')) {
+        console.log("Initializing Heroku repository");
+        execSync(`git init`);
+        console.log(`Success : git init`);
+    }
+
     addRemote(heroku.app_name);
 
     let remote_branch = execSync("git remote show heroku | grep 'HEAD'")
         .toString()
         .trim();
 
-    const repoExists = !remote_branch.includes("unknown");
+    let repoExists = !remote_branch.includes("unknown");
 
     if (!repoExists) {
         // console.log("Initializing Heroku repository")
@@ -55,6 +61,8 @@ const deploy = () => {
         //
         // execSync(`git branch -M main`);
         // console.log(`Success : git branch -M main`);
+        // execSync(`git remote set-head heroku -a`);
+        // console.log(`Success : git remote set-head origin -a`);
         // execSync('git fetch --all --unshallow');
         // console.log(`Success : git fetch --all --unshallow`);
     } else if (!remote_branch.includes("main")) {
@@ -65,17 +73,10 @@ const deploy = () => {
     addEnvConfigVars(heroku.app_name);
 
     try {
-        execSync(`git pull heroku main`);
-        console.log(`Success : git pull heroku main`);
+        const resultPush = execSync(`git push heroku HEAD:refs/heads/main`);
+        console.log(`Success : git push heroku HEAD:refs/heads/main`);
     } catch (err) {
-        console.error('Error : git push heroku main : ', err);
-    }
-
-    try {
-        execSync(`git push heroku main`);
-        console.log(`Success : git push heroku main`);
-    } catch (err) {
-        console.error('Error : git push heroku main : ', err);
+        console.error('Error : git push heroku HEAD:refs/heads/main');
     }
 };
 
